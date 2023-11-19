@@ -10,8 +10,9 @@
         body {
             margin: 0;
             overflow: hidden;
-            background-color: #000; 
+            background-color: #000;
         }
+
         #parte1 {
             display: flex;
             align-items: center;
@@ -20,13 +21,15 @@
             background: url('Federação High-Tech.png') no-repeat center center;
             background-size: cover;
         }
+
         #parte1 button {
             background: url('Botão de Play.png') no-repeat center center;
             background-size: cover;
             border: none;
-            width: 500px; 
-            height: 500px; 
+            width: 500px;
+            height: 500px;
         }
+
         #parte2 {
             position: absolute;
             top: 0;
@@ -35,12 +38,14 @@
             height: 100%;
             display: none;
         }
+
         #parte2 img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             position: absolute;
         }
+
         #parte2 video {
             width: 800px;
             height: 500px;
@@ -48,14 +53,23 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: -1; 
+            z-index: -1;
+        }
+
+        #backgroundMusic {
+            display: none;
         }
     </style>
 </head>
 <body>
 
+<audio id="backgroundMusic" loop>
+    <source src="FederationTv Ambiente.mp3" type="audio/mpeg">
+    Your browser does not support the audio tag.
+</audio>
+
 <div id="parte1">
-    <button onclick="mostrarParte2()"></button>
+    <button onclick="iniciarMusicaDeFundo(); mostrarParte2();"></button>
 </div>
 
 <div id="parte2">
@@ -68,7 +82,12 @@
 <script>
     var currentVideo = 1;
     var repetitionCount = 0;
-    var maxRepetitions = 6; // Tempo do video, 1 = 10 segundos
+    var maxRepetitions = 6; // Tempo do vídeo, 1 = 10 segundos
+
+    function iniciarMusicaDeFundo() {
+        var backgroundMusic = document.getElementById('backgroundMusic');
+        backgroundMusic.play();
+    }
 
     function mostrarParte2() {
         document.getElementById('parte1').style.display = 'none';
@@ -90,7 +109,7 @@
             document.getElementById('videoPlayer').load();
             setTimeout(function () {
                 document.getElementById('videoPlayer').play();
-            }, 1000); // Tempo antes do próximo vídeo
+            }, 1000); 
         }
     }
 </script>
