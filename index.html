@@ -10,9 +10,8 @@
         body {
             margin: 0;
             overflow: hidden;
-            background-color: #000;
+            background-color: #000; 
         }
-
         #parte1 {
             display: flex;
             align-items: center;
@@ -21,96 +20,92 @@
             background: url('Federação High-Tech.png') no-repeat center center;
             background-size: cover;
         }
-
         #parte1 button {
             background: url('Botão de Play.png') no-repeat center center;
             background-size: cover;
             border: none;
-            width: 500px;
-            height: 500px;
+            width: 500px; 
+            height: 500px; 
         }
-
         #parte2 {
+            display: none;
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: url('FederationTvStage1.png') no-repeat center center;
+            background-size: cover;
         }
-
-        #parte2 img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-        }
-
         #parte2 video {
             width: 800px;
-            height: 500px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: -1;
-        }
-
-        #backgroundMusic {
+            height: 400px;
+            z-index: -1; 
             display: none;
+        }
+        #contador {
+            color: rgb(255, 0, 0);
+            font-size: 40px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
 
-<audio id="backgroundMusic" loop>
-    <source src="FederationTv Ambiente.mp3" type="audio/mpeg">
-    Your browser does not support the audio tag.
-</audio>
-
 <div id="parte1">
-    <button onclick="iniciarMusicaDeFundo(); mostrarParte2();"></button>
+    <button onclick="mostrarParte2()"></button>
 </div>
 
 <div id="parte2">
-    <img src="FederationTvStage1.png" alt="Imagem de fundo">
+    <div id="contador"></div>
     <video id="videoPlayer" controls onended="reiniciarVideo()">
-        <source id="videoSource" src="Camera1.mp4" type="video/mp4">
+        <source id="videoSource" src="Clima Federação.mp4" type="video/mp4">
     </video>
 </div>
 
 <script>
-    var currentVideo = 1;
     var repetitionCount = 0;
-    var maxRepetitions = 6; // Tempo do vídeo, 1 = 10 segundos
-
-    function iniciarMusicaDeFundo() {
-        var backgroundMusic = document.getElementById('backgroundMusic');
-        backgroundMusic.play();
-    }
+    var maxRepetitions = 1; 
 
     function mostrarParte2() {
         document.getElementById('parte1').style.display = 'none';
-        document.getElementById('parte2').style.display = 'block';
-        repetitionCount = 0; // contador de repetições
-        document.getElementById('videoPlayer').play();
+        document.getElementById('parte2').style.display = 'flex';
+        startContador(); 
     }
 
     function reiniciarVideo() {
-        repetitionCount++;
+        document.getElementById('videoPlayer').currentTime = 0;
+        document.getElementById('videoPlayer').play();
+    }
 
-        if (repetitionCount < maxRepetitions) {
-            document.getElementById('videoPlayer').currentTime = 0;
-            document.getElementById('videoPlayer').play();
-        } else {
-            repetitionCount = 0;
-            currentVideo = (currentVideo % 5) + 1;
-            document.getElementById('videoSource').src = 'Camera' + currentVideo + '.mp4';
-            document.getElementById('videoPlayer').load();
-            setTimeout(function () {
+    function startContador() {
+
+        var dataAlvo = new Date("Nov 19, 2023 17:00:00").getTime();
+
+        var x = setInterval(function() {
+
+            var agora = new Date().getTime();
+
+            var diferenca = dataAlvo - agora;
+
+            var dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+            var horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
+            var segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
+
+            document.getElementById("contador").innerHTML = dias + "d " + horas + "h "
+            + minutos + "m " + segundos + "s ";
+
+            if (diferenca < 0) {
+                clearInterval(x);
+                document.getElementById("contador").innerHTML = "Tempo expirado!";
+                document.getElementById('videoPlayer').style.display = 'block';
                 document.getElementById('videoPlayer').play();
-            }, 1000); 
-        }
+            }
+        }, 1000);
     }
 </script>
 
