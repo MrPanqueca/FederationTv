@@ -55,20 +55,12 @@
             transform: translate(-50%, -50%);
             z-index: -1;
         }
-
-        #backgroundMusic {
-            display: none;
-        }
     </style>
 </head>
 <body>
 
-<audio id="backgroundMusic" loop>
-    <source src="FederationTv Ambiente.mp3" type="audio/mpeg">
-</audio>
-
 <div id="parte1">
-    <button onclick="iniciarMusicaDeFundo(); mostrarParte2();"></button>
+    <button onclick="mostrarParte2();"></button>
 </div>
 
 <div id="parte2">
@@ -79,15 +71,8 @@
 </div>
 
 <script>
-    var currentVideo = 1;
     var repetitionCount = 0;
-    var maxRepetitions = 1; // Tempo do vídeo, 1 = 10 segundos
-
-    function iniciarMusicaDeFundo() {
-        var backgroundMusic = document.getElementById('backgroundMusic');
-        backgroundMusic.volume = 0.5; 
-        backgroundMusic.play();
-    }
+    var maxRepetitions = 6; // Tempo do vídeo, 1 = 10 segundos
 
     function mostrarParte2() {
         document.getElementById('parte1').style.display = 'none';
@@ -104,8 +89,7 @@
             document.getElementById('videoPlayer').play();
         } else {
             repetitionCount = 0;
-            currentVideo = (currentVideo % 1) + 1;
-            document.getElementById('videoSource').src = 'Camera' + currentVideo + '.mp4';
+            document.getElementById('videoSource').src = 'Clima Federação.mp4';
             document.getElementById('videoPlayer').load();
             setTimeout(function () {
                 document.getElementById('videoPlayer').play();
